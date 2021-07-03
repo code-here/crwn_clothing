@@ -1,52 +1,44 @@
-import React from 'react';
-import FormInput from '../form-input/form-input.component';
-import CustomButton from '../custom-button/custom-button.component';
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
-import './sign-up.style.scss';
+import React from "react";
+import { connect } from "react-redux";
+
+import FormInput from "../form-input/form-input.component";
+import CustomButton from "../custom-button/custom-button.component";
+
+import "./sign-up.style.scss";
+
+import { signUpStart } from "../../redux/user/user.action";
 
 class signUp extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      displayName: '',
-      email: '',
-      password: '',
-      confirmPassword: ''
-    }
+      displayName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    };
   }
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     event.preventDefault();
-
+    const { signUpStart } = this.props;
     const { displayName, email, password, confirmPassword } = this.state;
 
-    if(password !== confirmPassword) {
+    if (password !== confirmPassword) {
       alert("password and confirm password don't match");
       return;
     }
-    
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(email, password);
-      await createUserProfileDocument(user, { displayName });
 
-      this.setState({
-        displayName: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-      })
-    } catch(err) {
-      console.log(`error occured during sign up: ${err}`);
-    }
-  }
+    signUpStart({ email, password, displayName });
+  };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
-  }
+  };
 
   render() {
     const { displayName, email, password, confirmPassword } = this.state;
@@ -87,13 +79,15 @@ class signUp extends React.Component {
             handleChange={this.handleChange}
             required
           />
-          <CustomButton type="submit" >
-            Sign Up
-          </CustomButton>
+          <CustomButton type="submit">Sign Up</CustomButton>
         </form>
       </div>
-    )
+    );
   }
 }
 
-export default signUp;
+const mapDispatchToProps = (dispatch) => ({
+  signUpStart: (userCredentials) => dispatch(signUpStart(userCredentials)),
+});
+
+export default connect(null, mapDispatchToProps)(signUp);

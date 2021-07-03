@@ -5,7 +5,6 @@ import CollectionItem from "../collection-item/CollectionItem.component";
 
 const CollectionPreview = ({ title, match, items }) => (
   <div className="collection-preview">
-    {console.log(match)}
     <Link to={`${match.url}/${title.toLowerCase()}`} className="title">
       {title.toUpperCase()}
     </Link>
