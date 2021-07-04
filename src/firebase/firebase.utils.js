@@ -70,10 +70,10 @@ export const convertSnapshotsCollectionToMap = collection => {
   }, {})
 }
 
-// just for logout
+
 export const getCurrentUser = () => new Promise((resolve, reject) => {
   const unsubscribe = auth.onAuthStateChanged(userAuth => {
-    unsubscribe(); // loging out
+    unsubscribe();
     resolve(userAuth);
   }, reject)
 });
