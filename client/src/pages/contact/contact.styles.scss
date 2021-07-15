@@ -1,0 +1,13 @@
+.contact {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    .item {
+        padding: 20vh 5vw;
+        border: 1px solid;
+        border-radius: 10px;
+        font-size: 18px;
+    }
+}

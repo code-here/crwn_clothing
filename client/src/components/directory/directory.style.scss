@@ -2,4 +2,9 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+
+  @media screen and (max-width: 800px) {
+      flex-wrap: nowrap;
+      flex-direction: column;
+  }
 }
